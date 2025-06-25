@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control | JMR ONLINE PRODUCTS</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+            margin-top: 10px;
+            background-color: #34495e;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #1abc9c;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .admin-header h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+        
+        .btn-nuevo {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-nuevo:hover {
+            background-color: #16a085;
+        }
+        
+        .productos-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .productos-table th, .productos-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .productos-table th {
+            background-color: #34495e;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .productos-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .producto-imagen {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .acciones-cell {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-accion {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-modificar {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-modificar:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-eliminar {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-eliminar:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Modal para editar/agregar productos */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+        
+        .modal-contenido {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 80%;
+            max-width: 600px;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-cerrar {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-cerrar:hover {
+            color: #333;
+        }
+        
+        .modal-header {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .modal-titulo {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .modal-footer {
+            text-align: right;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-guardar {
+            background-color: #1abc9c;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-guardar:hover {
+            background-color: #16a085;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS - Panel de Administración</h1>
+        <nav>
+            <a href="control.html">Productos</a>
+            <a href="#">Pedidos</a>
+            <a href="#">Clientes</a>
+            <a href="#">Estadísticas</a>
+            <a href="#">Configuración</a>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Lista de Productos</h1>
+            <button class="btn-nuevo" onclick="mostrarModalAgregar()">+ Nuevo Producto</button>
+        </div>
+        
+        <table class="productos-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Producto 1 -->
+                <tr>
+                    <td>1</td>
+                    <td><img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c" alt="Laptop Ultra" class="producto-imagen"></td>
+                    <td>Laptop Ultra</td>
+                    <td>Laptop ultradelgada con pantalla 4K, procesador de última generación y 16GB de RAM.</td>
+                    <td>$1,299.99</td>
+                    <td class="acciones-cell">
+                        <button class="btn-accion btn-modificar" onclick="mostrarModalEditar(1)">Modificar</button>
+                        <button class="btn-accion btn-eliminar" onclick="eliminarProducto(1)">Eliminar</button>
+                    </td>
+                </tr>
+                
+                <!-- Producto 2 -->
+                <tr>
+                    <td>2</td>
+                    <td><img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d" alt="Auriculares Pro" class="producto-imagen"></td>
+                    <td>Auriculares Pro</td>
+                    <td>Auriculares inalámbricos con cancelación de ruido y sonido envolvente de alta fidelidad.</td>
+                    <td>$249.99</td>
+                    <td class="acciones-cell">
+                        <button class="btn-accion btn-modificar" onclick="mostrarModalEditar(2)">Modificar</button>
+                        <button class="btn-accion btn-eliminar" onclick="eliminarProducto(2)">Eliminar</button>
+                    </td>
+                </tr>
+                
+                <!-- Producto 3 -->
+                <tr>
+                    <td>3</td>
+                    <td><img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01" alt="Cámara Pro X" class="producto-imagen"></td>
+                    <td>Cámara Pro X</td>
+                    <td>Cámara profesional con sensor full-frame y grabación en 8K para fotógrafos exigentes.</td>
+                    <td>$2,499.99</td>
+                    <td class="acciones-cell">
+                        <button class="btn-accion btn-modificar" onclick="mostrarModalEditar(3)">Modificar</button>
+                        <button class="btn-accion btn-eliminar" onclick="eliminarProducto(3)">Eliminar</button>
+                    </td>
+                </tr>
+                
+                <!-- Producto 4 -->
+                <tr>
+                    <td>4</td>
+                    <td><img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4" alt="Smartwatch Fit" class="producto-imagen"></td>
+                    <td>Smartwatch Fit</td>
+                    <td>Reloj inteligente con monitor de actividad, GPS integrado y resistencia al agua.</td>
+                    <td>$179.99</td>
+                    <td class="acciones-cell">
+                        <button class="btn-accion btn-modificar" onclick="mostrarModalEditar(4)">Modificar</button>
+                        <button class="btn-accion btn-eliminar" onclick="eliminarProducto(4)">Eliminar</button>
+                    </td>
+                </tr>
+                
+                <!-- Producto 5 -->
+                <tr>
+                    <td>5</td>
+                    <td><img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Tablet Pro" class="producto-imagen"></td>
+                    <td>Tablet Pro</td>
+                    <td>Tablet de alto rendimiento con pantalla táctil de alta resolución y lápiz óptico incluido.</td>
+                    <td>$599.99</td>
+                    <td class="acciones-cell">
+                        <button class="btn-accion btn-modificar" onclick="mostrarModalEditar(5)">Modificar</button>
+                        <button class="btn-accion btn-eliminar" onclick="eliminarProducto(5)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal para editar/agregar productos -->
+    <div id="modalProducto" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+                <h2 class="modal-titulo" id="modalTitulo">Editar Producto</h2>
+            </div>
+            <div class="modal-body">
+                <form id="formProducto">
+                    <input type="hidden" id="productoId">
+                    
+                    <div class="form-group">
+                        <label for="nombre">Nombre del Producto</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="precio">Precio ($)</label>
+                        <input type="number" id="precio" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="imagen">URL de la Imagen</label>
+                        <input type="url" id="imagen" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" required>
+                            <option value="">Seleccione una categoría</option>
+                            <option value="electronica">Electrónica</option>
+                            <option value="computacion">Computación</option>
+                            <option value="audio">Audio</option>
+                            <option value="fotografia">Fotografía</option>
+                            <option value="wearables">Wearables</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-guardar" onclick="guardarProducto()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS - Panel de Administración</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Función para mostrar el modal de edición
+        function mostrarModalEditar(id) {
+            // Aquí normalmente harías una petición para obtener los datos del producto
+            // Por ahora usaremos datos de ejemplo basados en el ID
+            
+            let producto = {
+                id: id,
+                nombre: '',
+                descripcion: '',
+                precio: '',
+                imagen: '',
+                categoria: ''
+            };
+            
+            // Datos de ejemplo basados en el ID
+            switch(id) {
+                case 1:
+                    producto.nombre = 'Laptop Ultra';
+                    producto.descripcion = 'Laptop ultradelgada con pantalla 4K, procesador de última generación y 16GB de RAM.';
+                    producto.precio = '1299.99';
+                    producto.imagen = 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c';
+                    producto.categoria = 'computacion';
+                    break;
+                case 2:
+                    producto.nombre = 'Auriculares Pro';
+                    producto.descripcion = 'Auriculares inalámbricos con cancelación de ruido y sonido envolvente de alta fidelidad.';
+                    producto.precio = '249.99';
+                    producto.imagen = 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d';
+                    producto.categoria = 'audio';
+                    break;
+                case 3:
+                    producto.nombre = 'Cámara Pro X';
+                    producto.descripcion = 'Cámara profesional con sensor full-frame y grabación en 8K para fotógrafos exigentes.';
+                    producto.precio = '2499.99';
+                    producto.imagen = 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01';
+                    producto.categoria = 'fotografia';
+                    break;
+                case 4:
+                    producto.nombre = 'Smartwatch Fit';
+                    producto.descripcion = 'Reloj inteligente con monitor de actividad, GPS integrado y resistencia al agua.';
+                    producto.precio = '179.99';
+                    producto.imagen = 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4';
+                    producto.categoria = 'wearables';
+                    break;
+                case 5:
+                    producto.nombre = 'Tablet Pro';
+                    producto.descripcion = 'Tablet de alto rendimiento con pantalla táctil de alta resolución y lápiz óptico incluido.';
+                    producto.precio = '599.99';
+                    producto.imagen = 'https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60';
+                    producto.categoria = 'computacion';
+                    break;
+            }
+            
+            // Llenar el formulario con los datos del producto
+            document.getElementById('modalTitulo').textContent = 'Editar Producto';
+            document.getElementById('productoId').value = producto.id;
+            document.getElementById('nombre').value = producto.nombre;
+            document.getElementById('descripcion').value = producto.descripcion;
+            document.getElementById('precio').value = producto.precio;
+            document.getElementById('imagen').value = producto.imagen;
+            document.getElementById('categoria').value = producto.categoria;
+            
+            // Mostrar el modal
+            document.getElementById('modalProducto').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Función para mostrar el modal de agregar nuevo producto
+        function mostrarModalAgregar() {
+            // Limpiar el formulario
+            document.getElementById('modalTitulo').textContent = 'Agregar Nuevo Producto';
+            document.getElementById('formProducto').reset();
+            document.getElementById('productoId').value = '';
+            
+            // Mostrar el modal
+            document.getElementById('modalProducto').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Función para cerrar el modal
+        function cerrarModal() {
+            document.getElementById('modalProducto').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Función para guardar los cambios (editar o agregar)
+        function guardarProducto() {
+            // Aquí iría la lógica para guardar los cambios en la base de datos
+            const id = document.getElementById('productoId').value;
+            const nombre = document.getElementById('nombre').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const precio = document.getElementById('precio').value;
+            const imagen = document.getElementById('imagen').value;
+            const categoria = document.getElementById('categoria').value;
+            
+            // Validación básica
+            if (!nombre || !descripcion || !precio || !imagen || !categoria) {
+                alert('Por favor complete todos los campos');
+                return;
+            }
+            
+            // Mostrar mensaje de éxito
+            if (id) {
+                alert(`Producto "${nombre}" actualizado correctamente`);
+            } else {
+                alert(`Producto "${nombre}" agregado correctamente`);
+            }
+            
+            // Cerrar el modal
+            cerrarModal();
+            
+            // En una aplicación real, aquí actualizarías la tabla con los nuevos datos
+        }
+        
+        // Función para eliminar un producto
+        function eliminarProducto(id) {
+            // Confirmar antes de eliminar
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                // Aquí iría la lógica para eliminar el producto de la base de datos
+                alert('Producto eliminado correctamente');
+                
+                // En una aplicación real, aquí eliminarías la fila de la tabla
+            }
+        }
+        
+        // Cerrar el modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                cerrarModal();
+            }
+        };
+        
+        // Cerrar con tecla ESC
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            if (evt.key === 'Escape') {
+                cerrarModal();
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMR ONLINE PRODUCTS - Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+            padding: 40px 20px;
+        }
+        .register-card {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .register-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .register-title h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .register-title p {
+            color: #666;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        .password-container {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+        button[type="submit"]:hover {
+            background-color: #555;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .login-link a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .success-message {
+            color: #2ecc71;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS</h1>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Catálogo</a>
+            <a href="#">Colecciones</a>
+            <a href="#">Contacto</a>
+            <a href="#">Login</a>
+            <a href="#">Recepción</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="register-card">
+            <div class="register-title">
+                <h2>CREAR CUENTA</h2>
+                <p>Únete a JMR Online Products para acceder a nuestros productos premium</p>
+            </div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="name">Nombre completo</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" required minlength="8">
+                        <span class="toggle-password" id="toggle-password">👁️</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password_confirmation">Confirmar contraseña</label>
+                    <div class="password-container">
+                        <input type="password" id="password_confirmation" name="password_confirmation" required minlength="8">
+                        <span class="toggle-password" id="toggle-password-confirm">👁️</span>
+                    </div>
+                </div>
+
+                <div id="message" class="error-message"></div>
+
+                <button type="submit">REGISTRARSE</button>
+            </form>
+
+            <div class="login-link">
+                ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS</p>
+        <p>Productos premium para el hombre moderno</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('toggle-password');
+        const togglePasswordConfirm = document.getElementById('toggle-password-confirm');
+        const passwordInput = document.getElementById('password');
+        const passwordConfirmInput = document.getElementById('password_confirmation');
+        const messageDiv = document.getElementById('message');
+        const registerForm = document.getElementById('register-form');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+
+        togglePasswordConfirm.addEventListener('click', function() {
+            const type = passwordConfirmInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordConfirmInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '🙈';
+        });
+
+        // Form validation
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const passwordConfirmation = document.getElementById('password_confirmation').value;
+
+            // Reset message
+            messageDiv.textContent = '';
+            messageDiv.className = 'error-message';
+
+            // Validate passwords match
+            if (password !== passwordConfirmation) {
+                messageDiv.textContent = 'Las contraseñas no coinciden.';
+                return;
+            }
+
+            // Validate password length
+            if (password.length < 8) {
+                messageDiv.textContent = 'La contraseña debe tener al menos 8 caracteres.';
+                return;
+            }
+
+            // Simulate successful registration
+            messageDiv.textContent = '¡Registro exitoso! Redirigiendo...';
+            messageDiv.className = 'success-message';
+            
+            // In a real application, you would send this data to your server
+            console.log('Registration data:', { name, email, password });
+            
+            // Redirect after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

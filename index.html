@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMR ONLINE PRODUCTS - Inicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background-color: #333;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #555;
+        }
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 60px 20px;
+            background-color: #f9f9f9;
+        }
+        .feature-card {
+            background-color: white;
+            width: 300px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .feature-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="colecciones.html">Colecciones</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="login.html">Login</a>
+            <a href="registro.html">Registro</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h2>PRODUCTOS PREMIUM PARA EL HOMBRE MODERNO</h2>
+        <p>Descubre nuestra exclusiva selección de productos diseñados para hombres que buscan calidad y estilo</p>
+        <a href="catalogo.html" class="btn">VER CATÁLOGO</a>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>NUEVOS PRODUCTOS</h3>
+            <p>Explora nuestras últimas incorporaciones al catálogo</p>
+            <a href="crear-producto.html" class="btn">Agregar Producto</a>
+        </div>
+        
+        <div class="feature-card">
+            <h3>REGÍSTRATE</h3>
+            <p>Únete a nuestra comunidad para recibir ofertas exclusivas</p>
+            <a href="registro.html" class="btn">Crear Cuenta</a>
+        </div>
+        
+        <div class="feature-card">
+            <h3>CONTÁCTANOS</h3>
+            <p>¿Tienes preguntas? Nuestro equipo está listo para ayudarte</p>
+            <a href="contacto.html" class="btn">Enviar Mensaje</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS</p>
+        <p>Productos premium para el hombre moderno</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

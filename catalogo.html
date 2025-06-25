@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo | JMR ONLINE PRODUCTS</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #555;
+        }
+        
+        .carrito-btn {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .carrito-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        
+        .carrito-contador {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff5722;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mensaje-carrito {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1001;
+            display: none;
+            animation: slideIn 0.5s, fadeOut 0.5s 2.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {right: -300px; opacity: 0;}
+            to {right: 20px; opacity: 1;}
+        }
+        
+        @keyframes fadeOut {
+            from {opacity: 1;}
+            to {opacity: 0;}
+        }
+        
+        .catalogo-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .catalogo-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .catalogo-header h1 {
+            font-size: 2.5rem;
+            color: #222;
+            margin-bottom: 15px;
+        }
+        
+        .catalogo-header p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .producto-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+        
+        .producto-imagen {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .producto-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .producto-nombre {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .producto-descripcion {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        
+        .producto-precio {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .producto-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .btn-detalles {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-comprar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-detalles:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-comprar:hover {
+            background-color: #45a049;
+        }
+        
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+        
+        .modal-contenido {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 80%;
+            max-width: 700px;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-cerrar {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .modal-cerrar:hover {
+            color: #333;
+        }
+        
+        .modal-header {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .modal-titulo {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 0;
+        }
+        
+        .modal-body {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-imagen {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .modal-descripcion {
+            flex: 1;
+        }
+        
+        .modal-precio {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 15px 0;
+        }
+        
+        .modal-caracteristicas {
+            margin-top: 20px;
+        }
+        
+        .modal-caracteristicas h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .modal-caracteristicas ul {
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .modal-footer {
+            text-align: right;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-modal-comprar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-modal-comprar:hover {
+            background-color: #45a049;
+        }
+        
+        /* Estilos del modal del carrito */
+        .carrito-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .carrito-item-imagen {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+        
+        .carrito-item-info {
+            flex: 1;
+        }
+        
+        .carrito-item-nombre {
+            margin: 0 0 5px 0;
+            font-size: 1rem;
+        }
+        
+        .carrito-item-precio {
+            margin: 0;
+            color: #666;
+        }
+        
+        .carrito-item-cantidad {
+            display: flex;
+            align-items: center;
+        }
+        
+        .carrito-item-boton {
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        
+        .carrito-total {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html" class="active">Catálogo</a>
+            <a href="colecciones.html">Colecciones</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <button class="carrito-btn" onclick="mostrarCarrito()">
+            🛒
+            <span class="carrito-contador" id="carritoContador">0</span>
+        </button>
+    </header>
+
+    <div class="mensaje-carrito" id="mensajeCarrito">
+        Producto añadido al carrito
+    </div>
+
+    <div class="catalogo-container">
+        <div class="catalogo-header">
+            <h1>Nuestro Catálogo de Productos</h1>
+            <p>Descubre nuestra exclusiva selección de productos premium para el hombre moderno</p>
+        </div>
+        
+        <div id="productosContainer" class="productos-grid">
+            <!-- Producto 1: Laptop Ultra -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c" alt="Laptop Ultra" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Laptop Ultra</h3>
+                    <p class="producto-descripcion">Laptop ultradelgada con pantalla 4K, procesador de última generación y 16GB de RAM.</p>
+                    <p class="producto-precio">$1,299.99</p>
+                    <div class="producto-botones">
+                        <button class="btn-detalles" onclick="mostrarModal('modal1')">Detalles</button>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Laptop Ultra', 1299.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 2: Auriculares Pro -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d" alt="Auriculares Pro" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Auriculares Pro</h3>
+                    <p class="producto-descripcion">Auriculares inalámbricos con cancelación de ruido y sonido envolvente de alta fidelidad.</p>
+                    <p class="producto-precio">$249.99</p>
+                    <div class="producto-botones">
+                        <button class="btn-detalles" onclick="mostrarModal('modal2')">Detalles</button>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Auriculares Pro', 249.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 3: Cámara Pro X -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01" alt="Cámara Pro X" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Cámara Pro X</h3>
+                    <p class="producto-descripcion">Cámara profesional con sensor full-frame y grabación en 8K para fotógrafos exigentes.</p>
+                    <p class="producto-precio">$2,499.99</p>
+                    <div class="producto-botones">
+                        <button class="btn-detalles" onclick="mostrarModal('modal3')">Detalles</button>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Cámara Pro X', 2499.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 4: Smartwatch Fit -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4" alt="Smartwatch Fit" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Smartwatch Fit</h3>
+                    <p class="producto-descripcion">Reloj inteligente con monitor de actividad, GPS integrado y resistencia al agua.</p>
+                    <p class="producto-precio">$179.99</p>
+                    <div class="producto-botones">
+                        <button class="btn-detalles" onclick="mostrarModal('modal4')">Detalles</button>
+                        <button class="btn-comprar" onclick="agregarAlCarrito('Smartwatch Fit', 179.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modales para cada producto -->
+    <!-- Modal 1: Laptop Ultra -->
+    <div id="modal1" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <span class="modal-cerrar" onclick="cerrarModal('modal1')">&times;</span>
+                <h2 class="modal-titulo">Laptop Ultra</h2>
+            </div>
+            <div class="modal-body">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c" alt="Laptop Ultra" class="modal-imagen">
+                <div class="modal-descripcion">
+                    <p>La Laptop Ultra es el equipo perfecto para profesionales que necesitan potencia y portabilidad. Con un diseño ultradelgado y materiales premium, esta laptop no solo es potente sino también elegante.</p>
+                    <p class="modal-precio">$1,299.99</p>
+                    <div class="modal-caracteristicas">
+                        <h4>Características principales:</h4>
+                        <ul>
+                            <li>Pantalla 4K de 15.6" con tecnología IPS</li>
+                            <li>Procesador Intel Core i7 de 11ª generación</li>
+                            <li>16GB RAM DDR4</li>
+                            <li>512GB SSD NVMe</li>
+                            <li>Gráficos Intel Iris Xe</li>
+                            <li>Batería de hasta 12 horas de duración</li>
+                            <li>Peso: 1.3 kg</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-comprar" onclick="agregarAlCarrito('Laptop Ultra', 1299.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c')">Comprar ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Auriculares Pro -->
+    <div id="modal2" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <span class="modal-cerrar" onclick="cerrarModal('modal2')">&times;</span>
+                <h2 class="modal-titulo">Auriculares Pro</h2>
+            </div>
+            <div class="modal-body">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d" alt="Auriculares Pro" class="modal-imagen">
+                <div class="modal-descripcion">
+                    <p>Los Auriculares Pro ofrecen una experiencia auditiva inigualable con tecnología de cancelación de ruido activa y sonido de alta fidelidad. Perfectos para profesionales de audio y melómanos exigentes.</p>
+                    <p class="modal-precio">$249.99</p>
+                    <div class="modal-caracteristicas">
+                        <h4>Características principales:</h4>
+                        <ul>
+                            <li>Cancelación de ruido activa con 3 modos</li>
+                            <li>Sonido Hi-Res con drivers de 40mm</li>
+                            <li>Batería de hasta 30 horas (20 con ANC activo)</li>
+                            <li>Conexión Bluetooth 5.0 y cable auxiliar incluido</li>
+                            <li>Micrófono integrado con reducción de ruido</li>
+                            <li>Controles táctiles intuitivos</li>
+                            <li>Compatibilidad con asistente de voz</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-comprar" onclick="agregarAlCarrito('Auriculares Pro', 249.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d')">Comprar ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Cámara Pro X -->
+    <div id="modal3" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <span class="modal-cerrar" onclick="cerrarModal('modal3')">&times;</span>
+                <h2 class="modal-titulo">Cámara Pro X</h2>
+            </div>
+            <div class="modal-body">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01" alt="Cámara Pro X" class="modal-imagen">
+                <div class="modal-descripcion">
+                    <p>La Cámara Pro X es el sueño de todo fotógrafo profesional. Con sensor full-frame y capacidad de grabación en 8K, esta cámara establece nuevos estándares en calidad de imagen y versatilidad.</p>
+                    <p class="modal-precio">$2,499.99</p>
+                    <div class="modal-caracteristicas">
+                        <h4>Características principales:</h4>
+                        <ul>
+                            <li>Sensor CMOS full-frame de 45MP</li>
+                            <li>Grabación de video 8K a 30fps</li>
+                            <li>Estabilización de imagen de 5 ejes</li>
+                            <li>Doble ranura para tarjetas SD/CFexpress</li>
+                            <li>Pantalla táctil abatible de 3.2"</li>
+                            <li>Wi-Fi y Bluetooth integrados</li>
+                            <li>Resistente a polvo y salpicaduras</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-comprar" onclick="agregarAlCarrito('Cámara Pro X', 2499.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01')">Comprar ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Smartwatch Fit -->
+    <div id="modal4" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <span class="modal-cerrar" onclick="cerrarModal('modal4')">&times;</span>
+                <h2 class="modal-titulo">Smartwatch Fit</h2>
+            </div>
+            <div class="modal-body">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4" alt="Smartwatch Fit" class="modal-imagen">
+                <div class="modal-descripcion">
+                    <p>El Smartwatch Fit es tu compañero perfecto para una vida saludable. Con seguimiento avanzado de actividad, monitoreo cardiaco y resistencia al agua, este reloj inteligente te ayuda a alcanzar tus metas fitness.</p>
+                    <p class="modal-precio">$179.99</p>
+                    <div class="modal-caracteristicas">
+                        <h4>Características principales:</h4>
+                        <ul>
+                            <li>Pantalla AMOLED de 1.4" siempre activa</li>
+                            <li>Monitoreo continuo de frecuencia cardiaca</li>
+                            <li>Seguimiento de oxígeno en sangre (SpO2)</li>
+                            <li>Resistencia al agua 5ATM (50 metros)</li>
+                            <li>Más de 20 modos deportivos</li>
+                            <li>Batería de hasta 10 días de duración</li>
+                            <li>Notificaciones inteligentes y asistente de voz</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-comprar" onclick="agregarAlCarrito('Smartwatch Fit', 179.99, 'https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4')">Comprar ahora</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del Carrito -->
+    <div id="modalCarrito" class="modal">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <span class="modal-cerrar" onclick="cerrarModal('modalCarrito')">&times;</span>
+                <h2 class="modal-titulo">Tu Carrito de Compras</h2>
+            </div>
+            <div class="modal-body">
+                <div id="carritoItems">
+                    <!-- Los items del carrito se agregarán aquí dinámicamente -->
+                    <p id="carritoVacio" style="text-align: center; color: #666;">Tu carrito está vacío</p>
+                </div>
+                <div class="carrito-total">
+                    Total: $<span id="carritoTotal">0.00</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-detalles" onclick="cerrarModal('modalCarrito')">Seguir comprando</button>
+                <button class="btn-modal-comprar">Finalizar compra</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS</p>
+        <p>Productos premium para el hombre moderno</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Variables globales para el carrito
+        let carrito = [];
+        
+        // Función para mostrar el modal
+        function mostrarModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Previene el scroll de la página
+        }
+        
+        // Función para cerrar el modal
+        function cerrarModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaura el scroll de la página
+        }
+        
+        // Cerrar el modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        };
+        
+        // Cerrar con tecla ESC
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            if (evt.key === 'Escape') {
+                const modals = document.getElementsByClassName('modal');
+                for (let i = 0; i < modals.length; i++) {
+                    if (modals[i].style.display === 'block') {
+                        modals[i].style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            }
+        };
+        
+        // Función para agregar productos al carrito
+        function agregarAlCarrito(nombre, precio, imagen) {
+            // Mostrar mensaje
+            const mensaje = document.getElementById('mensajeCarrito');
+            mensaje.style.display = 'block';
+            mensaje.textContent = `${nombre} añadido al carrito`;
+            
+            // Ocultar mensaje después de 3 segundos
+            setTimeout(() => {
+                mensaje.style.display = 'none';
+            }, 3000);
+            
+            // Verificar si el producto ya está en el carrito
+            const productoExistente = carrito.find(item => item.nombre === nombre);
+            
+            if (productoExistente) {
+                productoExistente.cantidad += 1;
+            } else {
+                carrito.push({
+                    nombre: nombre,
+                    precio: precio,
+                    imagen: imagen,
+                    cantidad: 1
+                });
+            }
+            
+            // Actualizar contador del carrito
+            actualizarContadorCarrito();
+        }
+        
+        // Función para actualizar el contador del carrito
+        function actualizarContadorCarrito() {
+            const contador = document.getElementById('carritoContador');
+            const totalItems = carrito.reduce((total, item) => total + item.cantidad, 0);
+            contador.textContent = totalItems;
+            
+            // Mostrar u ocultar el contador según haya items
+            if (totalItems > 0) {
+                contador.style.display = 'flex';
+            } else {
+                contador.style.display = 'none';
+            }
+        }
+        
+        // Función para mostrar el carrito
+        function mostrarCarrito() {
+            const carritoItems = document.getElementById('carritoItems');
+            const carritoVacio = document.getElementById('carritoVacio');
+            const carritoTotal = document.getElementById('carritoTotal');
+            
+            // Limpiar el contenido previo
+            carritoItems.innerHTML = '';
+            
+            if (carrito.length === 0) {
+                carritoVacio.style.display = 'block';
+                carritoTotal.textContent = '0.00';
+            } else {
+                carritoVacio.style.display = 'none';
+                
+                let total = 0;
+                
+                carrito.forEach(item => {
+                    const itemTotal = item.precio * item.cantidad;
+                    total += itemTotal;
+                    
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'carrito-item';
+                    
+                    itemDiv.innerHTML = `
+                        <img src="${item.imagen}" alt="${item.nombre}" class="carrito-item-imagen">
+                        <div class="carrito-item-info">
+                            <h4 class="carrito-item-nombre">${item.nombre}</h4>
+                            <p class="carrito-item-precio">$${item.precio.toFixed(2)} x ${item.cantidad} = $${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <div class="carrito-item-cantidad">
+                            <button class="carrito-item-boton" onclick="modificarCantidad('${item.nombre}', -1)">-</button>
+                            <span>${item.cantidad}</span>
+                            <button class="carrito-item-boton" onclick="modificarCantidad('${item.nombre}', 1)">+</button>
+                            <button class="carrito-item-boton" onclick="eliminarDelCarrito('${item.nombre}')" style="margin-left: 10px; background: #ffebee;">🗑️</button>
+                        </div>
+                    `;
+                    
+                    carritoItems.appendChild(itemDiv);
+                });
+                
+                carritoTotal.textContent = total.toFixed(2);
+            }
+            
+            mostrarModal('modalCarrito');
+        }
+        
+        // Función para modificar la cantidad de un producto en el carrito
+        function modificarCantidad(nombre, cambio) {
+            const producto = carrito.find(item => item.nombre === nombre);
+            
+            if (producto) {
+                producto.cantidad += cambio;
+                
+                // Eliminar si la cantidad llega a 0
+                if (producto.cantidad <= 0) {
+                    carrito = carrito.filter(item => item.nombre !== nombre);
+                }
+                
+                // Actualizar carrito
+                actualizarContadorCarrito();
+                mostrarCarrito();
+            }
+        }
+        
+        // Función para eliminar un producto del carrito
+        function eliminarDelCarrito(nombre) {
+            carrito = carrito.filter(item => item.nombre !== nombre);
+            actualizarContadorCarrito();
+            mostrarCarrito();
+        }
+    </script>
+</body>
+</html>

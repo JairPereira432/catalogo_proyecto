@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMR ONLINE PRODUCTS - Contacto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .main-title {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f9f9f9;
+        }
+        .contact-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 150px;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        .info-item {
+            margin-bottom: 25px;
+        }
+        .info-item h3 {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .map-container {
+            width: 100%;
+            height: 400px;
+            margin-top: 30px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS</h1>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Catálogo</a>
+            <a href="#">Colecciones</a>
+            <a href="#">Contacto</a>
+            <a href="#">Login</a>
+            <a href="#">Recepción</a>
+        </nav>
+    </header>
+
+    <div class="main-title">
+        <h2>CONTACTO</h2>
+        <p>Estamos aquí para ayudarte. Contáctanos para cualquier consulta sobre nuestros productos premium</p>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-form">
+            <h3>Envíanos un mensaje</h3>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="asunto">Asunto</label>
+                    <input type="text" id="asunto" name="asunto" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea id="mensaje" name="mensaje" required></textarea>
+                </div>
+                
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <h3>Información de contacto</h3>
+            <div class="info-item">
+                <h4>Dirección</h4>
+                <p>Av. Premium 1234, Distrito Elegante, Ciudad</p>
+            </div>
+            <div class="info-item">
+                <h4>Teléfono</h4>
+                <p>+1 234 567 890</p>
+            </div>
+            <div class="info-item">
+                <h4>Email</h4>
+                <p>contacto@jmronline.com</p>
+            </div>
+            <div class="info-item">
+                <h4>Horario de atención</h4>
+                <p>Lunes a Viernes: 9:00 - 18:00</p>
+                <p>Sábados: 10:00 - 14:00</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d-75.5967049241643!3d6.201505493798687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e468280b4cef5fd%3A0x635c0a3a235a38a!2sCl.%2010%20%2315-31%2C%20Medell%C3%ADn%2C%20Antioquia%2C%20Colombia!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS</p>
+        <p>Productos premium para el hombre moderno</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMR ONLINE PRODUCTS - Crear Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .main-title {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #f9f9f9;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #333;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #f9f9f9;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS</h1>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Catálogo</a>
+            <a href="#">Colecciones</a>
+            <a href="#">Contacto</a>
+            <a href="#">Login</a>
+            <a href="#">Recepción</a>
+        </nav>
+    </header>
+
+    <div class="main-title">
+        <h2>CREAR NUEVO PRODUCTO</h2>
+        <p>Complete el formulario para agregar un nuevo producto premium</p>
+    </div>
+
+    <div class="form-container">
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="nombre">Nombre del Producto</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="categoria">Categoría</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="ropa">Ropa</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="cuidado-personal">Cuidado Personal</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input type="number" id="precio" name="precio" step="0.01" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="imagen">Imagen del Producto</label>
+                <input type="file" id="imagen" name="imagen" accept="image/*" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="coleccion">Colección</label>
+                <input type="text" id="coleccion" name="coleccion">
+            </div>
+            
+            <button type="submit">Guardar Producto</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS</p>
+        <p>Productos premium para el hombre moderno</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colecciones | JMR ONLINE PRODUCTS</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        header {
+            background-color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 15px 0;
+            margin-top: 10px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #555;
+        }
+        
+        .active {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+        }
+        
+        .carrito-btn {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .carrito-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        
+        .carrito-contador {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff5722;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .colecciones-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .colecciones-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .colecciones-header h1 {
+            font-size: 2.5rem;
+            color: #222;
+            margin-bottom: 15px;
+        }
+        
+        .colecciones-header p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .producto-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .producto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+        }
+        
+        .producto-imagen {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .producto-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .producto-nombre {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #222;
+        }
+        
+        .producto-descripcion {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        
+        .producto-precio {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .producto-botones {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .btn-detalles {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-comprar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .btn-detalles:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .btn-comprar:hover {
+            background-color: #45a049;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 5px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JMR ONLINE PRODUCTS</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="colecciones.html" class="active">Colecciones</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="login.html">Login</a>
+        </nav>
+        <button class="carrito-btn" onclick="mostrarCarrito()">
+            🛒
+            <span class="carrito-contador" id="carritoContador">0</span>
+        </button>
+    </header>
+
+    <div class="colecciones-container">
+        <div class="colecciones-header">
+            <h1>Todas Nuestras Colecciones</h1>
+            <p>Explora nuestra completa selección de productos premium en todas las categorías</p>
+        </div>
+        
+        <div class="productos-grid">
+            <!-- Producto 1: Laptop Ultra -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/laptop%20ultra.jpg?alt=media&token=b2eec752-6a0c-4ee0-906a-e8c5a89bed0c" alt="Laptop Ultra" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Laptop Ultra</h3>
+                    <p class="producto-descripcion">Laptop ultradelgada con pantalla 4K, procesador de última generación y 16GB de RAM.</p>
+                    <p class="producto-precio">$1,299.99</p>
+                    <div class="producto-botones">
+                        <a href="https://www.google.com/gmail/" class="btn-detalles">Ver en Gmail</a>
+                        <a href="https://www.google.com/maps" class="btn-comprar">Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 2: Auriculares Pro -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/auriculares%20pro.png?alt=media&token=8128a51d-9b8b-4a4f-95ce-986e073faa4d" alt="Auriculares Pro" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Auriculares Pro</h3>
+                    <p class="producto-descripcion">Auriculares inalámbricos con cancelación de ruido y sonido envolvente de alta fidelidad.</p>
+                    <p class="producto-precio">$249.99</p>
+                    <div class="producto-botones">
+                        <a href="https://www.google.com/drive/" class="btn-detalles">Ver en Drive</a>
+                        <a href="https://www.youtube.com" class="btn-comprar">Ver en YouTube</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 3: Cámara Pro X -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/camara%20pro%20x.jpg?alt=media&token=a93180e9-40d5-41bc-8900-bb0c09103f01" alt="Cámara Pro X" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Cámara Pro X</h3>
+                    <p class="producto-descripcion">Cámara profesional con sensor full-frame y grabación en 8K para fotógrafos exigentes.</p>
+                    <p class="producto-precio">$2,499.99</p>
+                    <div class="producto-botones">
+                        <a href="https://www.adobe.com/acrobat.html" class="btn-detalles">Ver en Acrobat</a>
+                        <a href="https://www.google.com/chrome/" class="btn-comprar">Ver en Chrome</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 4: Smartwatch Fit -->
+            <div class="producto-card">
+                <img src="https://firebasestorage.googleapis.com/v0/b/catalogo-7a546.firebasestorage.app/o/smartwach%20fit.png?alt=media&token=e0fdd03f-3bb6-470d-bdf6-6a77a8569dc4" alt="Smartwatch Fit" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Smartwatch Fit</h3>
+                    <p class="producto-descripcion">Reloj inteligente con monitor de actividad, GPS integrado y resistencia al agua.</p>
+                    <p class="producto-precio">$179.99</p>
+                    <div class="producto-botones">
+                        <a href="https://outlook.live.com/" class="btn-detalles">Ver en Outlook</a>
+                        <a href="https://www.youtube.com" class="btn-comprar">Ver en YouTube</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 5: Tablet Pro -->
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Tablet Pro" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Tablet Pro</h3>
+                    <p class="producto-descripcion">Tablet de alto rendimiento con pantalla táctil de alta resolución y lápiz óptico incluido.</p>
+                    <p class="producto-precio">$599.99</p>
+                    <div class="producto-botones">
+                        <a href="https://www.google.com/maps" class="btn-detalles">Ver en Maps</a>
+                        <a href="https://www.google.com/drive/" class="btn-comprar">Ver en Drive</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 6: Teclado Mecánico -->
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Teclado Mecánico" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Teclado Mecánico</h3>
+                    <p class="producto-descripcion">Teclado gaming mecánico con retroiluminación RGB y switches de alta durabilidad.</p>
+                    <p class="producto-precio">$129.99</p>
+                    <div class="producto-botones">
+                        <a href="https://www.google.com/gmail/" class="btn-detalles">Ver en Gmail</a>
+                        <a href="https://www.youtube.com" class="btn-comprar">Ver en YouTube</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 7: Monitor 4K -->
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Monitor 4K" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Monitor 4K</h3>
+                    <p class="producto-descripcion">Monitor profesional de 32 pulgadas con resolución 4K y colores calibrados para diseño.</p>
+                    <p class="producto-precio">$499.99</p>
+                    <div class="producto-botones">
+                        <a href="https://www.adobe.com/acrobat.html" class="btn-detalles">Ver en Acrobat</a>
+                        <a href="https://www.google.com/chrome/" class="btn-comprar">Ver en Chrome</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Producto 8: Altavoz Bluetooth -->
+            <div class="producto-card">
+                <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Altavoz Bluetooth" class="producto-imagen">
+                <div class="producto-info">
+                    <h3 class="producto-nombre">Altavoz Bluetooth</h3>
+                    <p class="producto-descripcion">Altavoz portátil con sonido estéreo de 20W, resistencia al agua y 24h de autonomía.</p>
+                    <p class="producto-precio">$89.99</p>
+                    <div class="producto-botones">
+                        <a href="https://outlook.live.com/" class="btn-detalles">Ver en Outlook</a>
+                        <a href="https://www.youtube.com" class="btn-comprar">Ver en YouTube</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>JMR ONLINE PRODUCTS</p>
+        <p>Productos premium para el hombre moderno</p>
+        <p>© 2023 JM Online Products. Todos los derechos reservados</p>
+    </footer>
+
+    <script>
+        // Variables globales para el carrito
+        let carrito = [];
+        
+        // Función para mostrar el carrito
+        function mostrarCarrito() {
+            alert("Funcionalidad del carrito en desarrollo. Actualmente hay " + carrito.length + " productos en el carrito.");
+        }
+        
+        // Función para agregar productos al carrito
+        function agregarAlCarrito(nombre, precio, imagen) {
+            carrito.push({
+                nombre: nombre,
+                precio: precio,
+                imagen: imagen
+            });
+            
+            // Actualizar contador del carrito
+            actualizarContadorCarrito();
+            
+            // Mostrar mensaje
+            alert(nombre + " ha sido añadido al carrito");
+        }
+        
+        // Función para actualizar el contador del carrito
+        function actualizarContadorCarrito() {
+            const contador = document.getElementById('carritoContador');
+            contador.textContent = carrito.length;
+            
+            // Mostrar u ocultar el contador según haya items
+            if (carrito.length > 0) {
+                contador.style.display = 'flex';
+            } else {
+                contador.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
