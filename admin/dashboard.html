@@ -2,30 +2,102 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Modo Administrador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrador - Productos</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-    <div class="container mt-5">
-        <!-- Botón de acceso admin (simulado) -->
-        <button id="adminToggle" class="btn btn-danger">Modo Administrador</button>
+<body class="bg-light">
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-store me-2"></i> Mi Tienda
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button id="adminToggle" class="btn btn-danger">
+                            <i class="fas fa-user-cog me-2"></i> Modo Admin
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Sección de productos (visible para todos) -->
-        <h2>Productos</h2>
-        <div id="productList" class="row"></div>
+    <!-- Contenido principal -->
+    <div class="container py-5">
+        <!-- Panel de administrador (oculto inicialmente) -->
+        <div id="adminPanel" class="card shadow-lg mb-5" style="display: none;">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-tools me-2"></i>Panel de Administración</h4>
+            </div>
+            <div class="card-body">
+                <!-- Formulario para agregar/editar productos -->
+                <form id="productForm" class="row g-3 mb-4">
+                    <input type="hidden" id="productId">
+                    <div class="col-md-5">
+                        <label class="form-label">Nombre del Producto</label>
+                        <input type="text" id="productName" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Precio ($)</label>
+                        <input type="number" id="productPrice" class="form-control" min="0" step="0.01" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Categoría</label>
+                        <select id="productCategory" class="form-select" required>
+                            <option value="">Seleccionar...</option>
+                            <option>Electrónicos</option>
+                            <option>Ropa</option>
+                            <option>Hogar</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </form>
 
-        <!-- Sección de administrador (oculta inicialmente) -->
-        <div id="adminSection" style="display: none;">
-            <h2 class="mt-4">Panel de Administrador</h2>
-            <form id="productForm">
-                <input type="text" id="productName" placeholder="Nombre" class="form-control mb-2">
-                <input type="number" id="productPrice" placeholder="Precio" class="form-control mb-2">
-                <button type="submit" class="btn btn-success">Agregar Producto</button>
-            </form>
-            <div id="adminProductList" class="mt-4"></div>
+                <!-- Tabla de productos -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Categoría</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <!-- Los productos se cargarán aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de productos (pública) -->
+        <h2 class="mb-4"><i class="fas fa-box-open me-2"></i>Catálogo de Productos</h2>
+        <div id="productList" class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Los productos se cargarán aquí -->
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Nuestro JS -->
     <script src="dashboard.js"></script>
 </body>
 </html>
